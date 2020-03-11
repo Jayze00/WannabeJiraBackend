@@ -1,8 +1,11 @@
 package com.tbz.jyrabackend.services;
 
 import com.tbz.jyrabackend.entities.Board;
+import com.tbz.jyrabackend.repositories.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class BoardService {
@@ -14,7 +17,19 @@ public class BoardService {
         this.boardRepository = boardRepository;
     }
 
-    public Board getBoards() {
+    public List<Board> getBoards() {
         return boardRepository.findAll();
+    }
+
+    public Board persistBoard(String name) {
+        Board board = new Board();
+        board.setName(name);
+        return boardRepository.save(board);
+    }
+
+
+
+    public void removeBoard(Board board){
+        boardRepository.delete(board);
     }
 }

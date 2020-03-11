@@ -2,6 +2,7 @@ package com.tbz.jyrabackend.controller;
 
 import com.tbz.jyrabackend.entities.Board;
 import com.tbz.jyrabackend.services.BoardService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,9 +15,20 @@ public class BoardController {
 
     private BoardService boardService;
 
+    @Autowired
+    BoardController(BoardService boardService) {
+        this.boardService = boardService;
+    }
+
     @RequestMapping(value = "/api/boards", method = RequestMethod.GET)
-    public void getBoards(@RequestBody List<Board> board) {
-        boardService.getBoards();
+    public List<Board> getBoard() {
+        return boardService.getBoards();
+    }
+
+
+    @RequestMapping(value = "/api/boards", method = RequestMethod.POST)
+    public Board persistBoard(@RequestBody String name) {
+        return boardService.persistBoard(name);
     }
 
 }
