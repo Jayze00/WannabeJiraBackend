@@ -1,4 +1,4 @@
-package com.tbz.jyrabackend.domain;
+package com.tbz.jyrabackend.entities;
 
 import javax.persistence.*;
 
@@ -22,7 +22,7 @@ public class Issue {
     private Board board;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private User user;
+    private AppUser user;
 
     private Status status;
 
@@ -46,11 +46,11 @@ public class Issue {
         this.description = description;
     }
 
-    public User getUser() {
+    public AppUser getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(AppUser user) {
         this.user = user;
     }
 

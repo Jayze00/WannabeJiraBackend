@@ -1,4 +1,4 @@
-package com.tbz.jyrabackend.domain;
+package com.tbz.jyrabackend.entities;
 
 import javax.persistence.*;
 import java.util.List;
