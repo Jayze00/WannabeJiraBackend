@@ -44,4 +44,13 @@ public class IssueService {
         issueRepository.save(issue);
         return issue;
     }
+
+    public Issue modifyIssue(Issue issue){
+        issueRepository.modifyIssue(issue.getTitle(), issue.getDescription(), issue.getBoard().getId(), issue.getUser().getId(), issue.getStatus(), issue.getId());
+        return issue;
+    }
+
+    public void deleteIssue(Issue issue){
+        issueRepository.delete(issue);
+    }
 }
