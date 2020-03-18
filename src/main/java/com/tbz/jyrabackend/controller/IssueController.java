@@ -22,32 +22,31 @@ public class IssueController {
     private BoardService boardService;
 
     @Autowired
-    IssueController(IssueService issueService) {
+    IssueController(IssueService issueService, BoardService boardService) {
         this.issueService = issueService;
+        this.boardService = boardService;
     }
 
     @RequestMapping(value = "/api/boards/{boardId}/issues", method = RequestMethod.GET)
-    public IssueDto getIssues(@RequestBody Long boardId) {
-               
+    public IssueDto getIssues(@PathVariable Long boardId) {
         return issueService.getIssues(boardService.getBoardById(boardId));
     }
 
     @RequestMapping(value = "/api/boards/{boardId}/issues", method = RequestMethod.POST)
     @ResponseBody
     public Issue addIssue(@PathVariable Long boardId, @RequestBody Issue issue) {
-
         return issueService.addIssue(issue);
     }
 
     @RequestMapping(value = "/api/boards/{boardId}/issues/{issueId}", method = RequestMethod.PUT)
     @ResponseBody
-    public Issue changeIssue(@PathVariable Long boardId, Long issueId, @RequestBody Issue issue) {
+    public Issue changeIssue(@PathVariable Long boardId, @PathVariable Long issueId, @RequestBody Issue issue) {
         return issueService.modifyIssue(issue);
     }
 
     @RequestMapping(value = "/api/boards/{boardId}/issues/{issueId}", method = RequestMethod.DELETE)
     @ResponseBody
-    public void deleteIssue(@PathVariable Long id, HttpServletResponse response, @RequestBody Issue issue) {
+    public void deleteIssue(@PathVariable Long boardId, @PathVariable Long issueId, HttpServletResponse response, @RequestBody Issue issue) {
         try {
             issueService.deleteIssue(issue);
         } catch (Exception exc){

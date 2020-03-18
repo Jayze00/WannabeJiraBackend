@@ -8,30 +8,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class IssueService {
     private IssueRepository issueRepository;
 
-
     @Autowired
-    IssueService(IssueRepository issueRepository){
+    IssueService(IssueRepository issueRepository) {
         this.issueRepository = issueRepository;
     }
 
-    public IssueDto getIssues(Board board){
+    public IssueDto getIssues(Board board) {
         IssueDto issueDto = new IssueDto();
         List<Issue> issues = issueRepository.findByBoard(board);
-        for (Issue issue : issues){
-            switch (issue.getStatus()){
+        for (Issue issue : issues) {
+            switch (issue.getStatus()) {
                 case ToDo:
                     issueDto.getTodo().add(issue);
                     break;
-
                 case InProgress:
                     issueDto.getInprogress().add(issue);
                     break;
-
                 case Done:
                     issueDto.getDone().add(issue);
                     break;
@@ -40,17 +38,24 @@ public class IssueService {
         return issueDto;
     }
 
-    public Issue addIssue(Issue issue){
+    public Issue addIssue(Issue issue) {
         issueRepository.save(issue);
         return issue;
     }
 
-    public Issue modifyIssue(Issue issue){
-        issueRepository.modifyIssue(issue.getTitle(), issue.getDescription(), issue.getBoard().getId(), issue.getUser().getId(), issue.getStatus(), issue.getId());
-        return issue;
+    public Issue modifyIssue(Issue issue) {
+        Optional<Issue> issueEntity = issueRepository.findById(issue.getId());
+        Issue modifiableIssue = issueEntity.get();
+        modifiableIssue.setBoard(issue.getBoard());
+        modifiableIssue.setDescription(issue.getDescription());
+        modifiableIssue.setStatus(issue.getStatus());
+        modifiableIssue.setTitle(issue.getTitle());
+        modifiableIssue.setUser(issue.getUser());
+        issueRepository.save(modifiableIssue);
+        return modifiableIssue;
     }
 
-    public void deleteIssue(Issue issue){
+    public void deleteIssue(Issue issue) {
         issueRepository.delete(issue);
     }
 }
