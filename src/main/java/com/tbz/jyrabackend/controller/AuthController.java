@@ -27,4 +27,9 @@ public class AuthController {
     public void logInUser(@RequestBody AppUser userData) {
         authService.logInUser(userData);
     }
+
+    @RequestMapping(value = "/api/users/myself", method = RequestMethod.GET)
+    public AppUser getCurrentUser() {
+        return authService.getCurrentUser();
+    }
 }
