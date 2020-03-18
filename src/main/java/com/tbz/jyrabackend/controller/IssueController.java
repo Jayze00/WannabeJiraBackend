@@ -5,6 +5,7 @@ import com.tbz.jyrabackend.entities.AppUser;
 import com.tbz.jyrabackend.entities.Board;
 import com.tbz.jyrabackend.entities.Issue;
 import com.tbz.jyrabackend.services.AuthService;
+import com.tbz.jyrabackend.services.BoardService;
 import com.tbz.jyrabackend.services.IssueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.List;
 @RestController
 public class IssueController {
     private IssueService issueService;
+    private BoardService boardService;
 
     @Autowired
     IssueController(IssueService issueService) {
@@ -26,9 +28,8 @@ public class IssueController {
 
     @RequestMapping(value = "/api/boards/{boardId}/issues", method = RequestMethod.GET)
     public IssueDto getIssues(@RequestBody Long boardId) {
-
-        Board board = new Board();
-        return issueService.getIssues(board);
+               
+        return issueService.getIssues(boardService.getBoardById(boardId));
     }
 
     @RequestMapping(value = "/api/boards/{boardId}/issues", method = RequestMethod.POST)
