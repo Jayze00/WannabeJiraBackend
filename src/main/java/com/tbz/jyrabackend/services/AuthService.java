@@ -24,12 +24,17 @@ public class AuthService {
     }
 
     public void registerUser(AppUser user) {
-        for (AppUser u : appUserRepository.findAll()) {
-            if (u.getUsername().equalsIgnoreCase(user.getUsername())) {
-                throw new IllegalArgumentException("Dieser Benutzername ist bereits vergeben.");
-            }
-            if (u.getMail().equalsIgnoreCase(user.getMail())) {
-                throw new IllegalArgumentException("Diese Mailadresse ist bereits vergeben.");
+        if(appUserRepository.findAll().size() == 0) {
+            user.setAdmin(true);
+        } else {
+            user.setAdmin(false);
+            for (AppUser u : appUserRepository.findAll()) {
+                if (u.getUsername().equalsIgnoreCase(user.getUsername())) {
+                    throw new IllegalArgumentException("Dieser Benutzername ist bereits vergeben.");
+                }
+                if (u.getMail().equalsIgnoreCase(user.getMail())) {
+                    throw new IllegalArgumentException("Diese Mailadresse ist bereits vergeben.");
+                }
             }
         }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));

@@ -21,7 +21,7 @@ public class Issue {
     @ManyToOne
     private Board board;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private AppUser user;
 
     private Status status;

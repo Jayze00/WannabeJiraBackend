@@ -36,7 +36,7 @@ public class IssueController {
     @RequestMapping(value = "/api/boards/{boardId}/issues", method = RequestMethod.POST)
     @ResponseBody
     public Issue addIssue(@PathVariable Long boardId, @RequestBody Issue issue) {
-        return issueService.addIssue(issue);
+        return issueService.addIssue(boardId, issue);
     }
 
     @RequestMapping(value = "/api/boards/{boardId}/issues/{issueId}", method = RequestMethod.PUT)
@@ -47,14 +47,8 @@ public class IssueController {
 
     @RequestMapping(value = "/api/boards/{boardId}/issues/{issueId}", method = RequestMethod.DELETE)
     @ResponseBody
-    public void deleteIssue(@PathVariable Long boardId, @PathVariable Long issueId, HttpServletResponse response, @RequestBody Issue issue) {
-        try {
-            issueService.deleteIssue(issue);
-        } catch (Exception exc){
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_MODIFIED, "Issue not deleted", exc);
-
-        }
+    public void deleteIssue(@PathVariable Long boardId, @PathVariable Long issueId) {
+        issueService.deleteIssue(issueId);
     }
 }
 
