@@ -3,6 +3,9 @@ package com.tbz.jyrabackend.services;
 import com.tbz.jyrabackend.dto.IssueDto;
 import com.tbz.jyrabackend.entities.Board;
 import com.tbz.jyrabackend.entities.Issue;
+import com.tbz.jyrabackend.entities.Issue.Status;
+import com.tbz.jyrabackend.repositories.AppUserRepository;
+import com.tbz.jyrabackend.repositories.BoardRepository;
 import com.tbz.jyrabackend.repositories.IssueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,10 +16,14 @@ import java.util.Optional;
 @Service
 public class IssueService {
     private IssueRepository issueRepository;
+    private BoardRepository boardRepository;
+    private AppUserRepository appUserRepository;
 
     @Autowired
-    IssueService(IssueRepository issueRepository) {
+    IssueService(IssueRepository issueRepository, BoardRepository boardRepository, AppUserRepository appUserRepository) {
         this.issueRepository = issueRepository;
+        this.boardRepository = boardRepository;
+        this.appUserRepository = appUserRepository;
     }
 
     public IssueDto getIssues(Board board) {
@@ -24,13 +31,13 @@ public class IssueService {
         List<Issue> issues = issueRepository.findByBoard(board);
         for (Issue issue : issues) {
             switch (issue.getStatus()) {
-                case ToDo:
-                    issueDto.getTodo().add(issue);
+                case toDo:
+                    issueDto.getToDo().add(issue);
                     break;
-                case InProgress:
-                    issueDto.getInprogress().add(issue);
+                case inProgress:
+                    issueDto.getInProgress().add(issue);
                     break;
-                case Done:
+                case done:
                     issueDto.getDone().add(issue);
                     break;
             }
@@ -38,9 +45,12 @@ public class IssueService {
         return issueDto;
     }
 
-    public Issue addIssue(Issue issue) {
-        issueRepository.save(issue);
-        return issue;
+    public Issue addIssue(Long boardId, Issue issue) {
+        Board board = boardRepository.findById(boardId).get();
+        issue.setBoard(board);
+        issue.setStatus(Status.toDo);
+        issue.setUser(appUserRepository.findById(issue.getUser().getId()).get());
+        return issueRepository.save(issue);
     }
 
     public Issue modifyIssue(Issue issue) {
@@ -55,7 +65,7 @@ public class IssueService {
         return modifiableIssue;
     }
 
-    public void deleteIssue(Issue issue) {
-        issueRepository.delete(issue);
+    public void deleteIssue(Long issueId) {
+        issueRepository.deleteById(issueId);
     }
 }

@@ -10,11 +10,7 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Boolean isOpen;
-
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Issue> issues;
+    private boolean isOpen;
 
     public Long getId() {
         return id;
@@ -28,19 +24,11 @@ public class Board {
         this.name = name;
     }
 
-    public Boolean getOpen() {
+    public boolean getOpen() {
         return isOpen;
     }
 
-    public void setOpen(Boolean open) {
+    public void setOpen(boolean open) {
         isOpen = open;
-    }
-
-    public List<Issue> getIssues() {
-        return issues;
-    }
-
-    public void setIssues(List<Issue> issues) {
-        this.issues = issues;
     }
 }

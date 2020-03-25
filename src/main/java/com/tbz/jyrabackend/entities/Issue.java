@@ -6,9 +6,9 @@ import javax.persistence.*;
 public class Issue {
 
     public enum Status {
-        ToDo,
-        InProgress,
-        Done
+        toDo,
+        inProgress,
+        done
     }
 
     @Id
@@ -21,7 +21,7 @@ public class Issue {
     @ManyToOne
     private Board board;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private AppUser user;
 
     private Status status;

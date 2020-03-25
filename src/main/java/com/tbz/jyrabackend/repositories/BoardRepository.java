@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
-    List<Board> findByIsOpen(Boolean isOpen);
+    List<Board> findByIsOpen(boolean isOpen);
 
 }
