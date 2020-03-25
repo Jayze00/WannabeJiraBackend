@@ -24,9 +24,8 @@ public class BoardService {
         return boardRepository.findAll();
     }
 
-    public Board persistBoard(String name) {
-        Board board = new Board();
-        board.setName(name);
+    public Board persistBoard(Board board) {
+        board.setOpen(true);
         return boardRepository.save(board);
     }
 

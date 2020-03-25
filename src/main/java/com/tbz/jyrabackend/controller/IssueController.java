@@ -29,7 +29,8 @@ public class IssueController {
 
     @RequestMapping(value = "/api/boards/{boardId}/issues", method = RequestMethod.GET)
     public IssueDto getIssues(@PathVariable Long boardId) {
-        return issueService.getIssues(boardService.getBoardById(boardId));
+        Board board = boardService.getBoardById(boardId);
+        return issueService.getIssues(board);
     }
 
     @RequestMapping(value = "/api/boards/{boardId}/issues", method = RequestMethod.POST)

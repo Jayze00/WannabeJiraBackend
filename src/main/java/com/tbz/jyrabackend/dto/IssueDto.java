@@ -2,27 +2,34 @@ package com.tbz.jyrabackend.dto;
 
 import com.tbz.jyrabackend.entities.Issue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class IssueDto {
-    private List<Issue> todo;
-    private List<Issue> inprogress;
+    private List<Issue> toDo;
+    private List<Issue> inProgress;
     private List<Issue> done;
 
-    public List<Issue> getTodo() {
-        return todo;
+    public IssueDto() {
+        toDo = new ArrayList<>();
+        inProgress = new ArrayList<>();
+        done = new ArrayList<>();
     }
 
-    public void setTodo(List<Issue> todo) {
-        this.todo = todo;
+    public List<Issue> getToDo() {
+        return toDo;
     }
 
-    public List<Issue> getInprogress() {
-        return inprogress;
+    public void setToDo(List<Issue> toDo) {
+        this.toDo = toDo;
     }
 
-    public void setInprogress(List<Issue> inprogress) {
-        this.inprogress = inprogress;
+    public List<Issue> getInProgress() {
+        return inProgress;
+    }
+
+    public void setInProgress(List<Issue> inProgress) {
+        this.inProgress = inProgress;
     }
 
     public List<Issue> getDone() {
