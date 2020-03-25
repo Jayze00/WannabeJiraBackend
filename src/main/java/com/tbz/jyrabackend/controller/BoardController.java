@@ -27,8 +27,8 @@ public class BoardController {
 
 
     @RequestMapping(value = "/api/boards", method = RequestMethod.POST)
-    public Board persistBoard(@RequestBody String name) {
-        return boardService.persistBoard(name);
+    public Board persistBoard(@RequestBody Board board) {
+        return boardService.persistBoard(board);
     }
 
 }

@@ -6,9 +6,9 @@ import javax.persistence.*;
 public class Issue {
 
     public enum Status {
-        ToDo,
-        InProgress,
-        Done
+        toDo,
+        inProgress,
+        done
     }
 
     @Id

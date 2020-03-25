@@ -14,7 +14,7 @@ public class AppUser {
     private String username;
     private String mail;
     private String password;
-    private Boolean isAdmin;
+    private boolean isAdmin;
 
     public long getId() {
         return id;
@@ -48,11 +48,11 @@ public class AppUser {
         this.password = password;
     }
 
-    public Boolean getAdmin() {
+    public boolean getAdmin() {
         return isAdmin;
     }
 
-    public void setAdmin(Boolean admin) {
+    public void setAdmin(boolean admin) {
         isAdmin = admin;
     }
 }

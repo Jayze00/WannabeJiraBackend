@@ -24,13 +24,13 @@ public class IssueService {
         List<Issue> issues = issueRepository.findByBoard(board);
         for (Issue issue : issues) {
             switch (issue.getStatus()) {
-                case ToDo:
-                    issueDto.getTodo().add(issue);
+                case toDo:
+                    issueDto.getToDo().add(issue);
                     break;
-                case InProgress:
-                    issueDto.getInprogress().add(issue);
+                case inProgress:
+                    issueDto.getInProgress().add(issue);
                     break;
-                case Done:
+                case done:
                     issueDto.getDone().add(issue);
                     break;
             }
